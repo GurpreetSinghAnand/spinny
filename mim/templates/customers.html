@@ -63,19 +63,37 @@
             <h3 class="p_head">Add New Customer</h3>
 
             <div class="required-field-block">
-                <input type="text" id="name" name="name" placeholder="Name" class="form-control">
+                <input type="text" id="cust-name" name="cust-name" placeholder="Name" class="form-control">
             </div>
             <div class="required-field-block">
-                <input type="email" id="email" name="email" placeholder="Email" class="form-control">
+                <input type="text" id="cust-email" name="cust-email" placeholder="Email" class="form-control">
             </div>
             <div class="required-field-block">
-                <input type="text" id="contact" name="contact" placeholder="Contact" class="form-control">
+                <input type="text" id="cust-contact" name="cust-contact" placeholder="Contact" class="form-control">
             </div>
-
             <div class="required-field-block">
-
+                <input type="text" id="house_no" name="house_no" placeholder="House No" class="form-control">
             </div>
-            <button class="btn btn_add" id="show">Submit</button>
+            <div class="required-field-block">
+                <input type="text" id="street_name" name="street_name" placeholder="Street Name" class="form-control">
+            </div>
+            <div class="required-field-block">
+                <input type="text" id="locality" name="locality" placeholder="Locality" class="form-control">
+            </div>
+            <div class="required-field-block">
+                <input type="text" id="landmark" name="landmark" placeholder="Landmark" class="form-control">
+            </div>
+            <div class="required-field-block">
+                <input type="text" id="city" name="city" placeholder="City" class="form-control">
+            </div>
+            <div class="required-field-block">
+                <input type="text" id="state-or-province" name="state-or-province" placeholder="State/Province"
+                       class="form-control">
+            </div>
+            <div class="required-field-block">
+                <input type="text" id="pincode" name="pincode" placeholder="Pincode" class="form-control">
+            </div>
+            <button class="btn btn_add" id="new-customer-submit">Submit</button>
         </div>
     </div>
 </section>
@@ -107,24 +125,11 @@
                     customerRecordHTML = customerRecordHTML + customer.contact.toString();
                     customerRecordHTML = customerRecordHTML + "</div>";
                     customerRecordHTML = customerRecordHTML + "<div class='cust-address'>";
-                    var add_id = customer.add.toString();
-                    var address = function () {
-                        var temp;
-                        var tempAdd = "";
-                        $.ajax({
-                            async: false,
-                            url: '/api/RetrieveAddressById/' + add_id + '/',
-                            type: 'GET',
-                            dataTpe: 'application/json',
-                            data: {format: 'json'},
-                            success: function (response) {
-                                temp = response;
-                                tempAdd = tempAdd + temp.house_no.toString() + ',\n' + temp.street_name.toString() + ',\n' + temp.locality.toString() + ',\n' + temp.landmark.toString() + ',\n' + temp.city.toString() + ',\n' + temp.state_or_province.toString() + ',\n' + temp.pincode.toString();
-                            }
-
-                        });
-                        return tempAdd;
-                    }();
+                    var addressArray = customer.address.toString().substring(1, customer.address.toString().length - 1).split(",");
+                    var address = "";
+                    for (var i = 0; i < addressArray.length; i++)
+                        addressArray[i] = addressArray[i].replace("u\'", "").replace("\'", "").toString();
+                    address = addressArray.join(',\n');
                     customerRecordHTML = customerRecordHTML + address;
                     customerRecordHTML = customerRecordHTML + "</div>";
                     customerRecordHTML = customerRecordHTML + "</li>";
@@ -133,19 +138,47 @@
             }
         });
     });
-    $('#new-product-submit').click(function () {
-        var display_name = $('#name').val();
-        var cost = $('#cost').val();
-        var brand = $('#brand').val();
+    $('#new-customer-submit').click(function () {
+        var house_no = $('#house_no').val().toString();
+        var street_name = $('#street_name').val().toString();
+        var locality = $('#locality').val().toString();
+        var landmark = $('#landmark').val().toString();
+        var city = $('#city').val().toString();
+        var state_or_province = $('#state-or-province').val().toString();
+        var pincode = $('#pincode').val().toString();
+        var cust_name = $('#cust-name').val().toString();
+        var cust_email = $('#cust-email').val().toString();
+        var cust_contact = $('#cust-contact').val().toString();
+        var address = [house_no, street_name, locality, landmark, city, state_or_province, pincode];
+        var customer = {};
+        customer.cust_name = cust_name;
+        customer.email = cust_email;
+        customer.contact = cust_contact;
+        customer.address = address;
+        customer.csrfmiddlewaretoken = getCookie('csrftoken');
+        $.ajaxSetup({
+            beforeSend: function (xhr, settings) {
+                if (!csrfSafeMethod(settings.type) && !this.crossDomain) {
+                    xhr.setRequestHeader("X-CSRFToken", getCookie('csrftoken'));
+                }
+            }
+        });
+        var customerJSONObject = JSON.stringify(customer, "\n");
         $.ajax({
+            async: false,
             url: '/api/PostNewCustomer/',
             type: 'POST',
-            contentTpe: 'application/json',
+            dataType: 'json',
+            contentType: 'application/json',
             headers: {"Authorization": "Basic " + window.btoa("spinny:spinny")},
-            data: {display_name: display_name, cost: cost, brand: brand},
+            data: customerJSONObject,
             success: function (response) {
-                alert('New Product Added!');
+                alert('New Customer Added!');
+            },
+            error: function (error) {
+                alert(error.detail);
             }
+
         });
         window.location.reload();
     });
@@ -155,5 +188,23 @@
     $('#cancel').click(function () {
         $('#new-customer-form').attr('class', 'hide');
     });
+    function getCookie(name) {
+        var cookieValue = null;
+        if (document.cookie && document.cookie != '') {
+            var cookies = document.cookie.split(';');
+            for (var i = 0; i < cookies.length; i++) {
+                var cookie = jQuery.trim(cookies[i]);
+                // Does this cookie string begin with the name we want?
+                if (cookie.substring(0, name.length + 1) == (name + '=')) {
+                    cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                    break;
+                }
+            }
+        }
+        return cookieValue;
+    }
+    function csrfSafeMethod(method) {
+        return (/^(GET|HEAD|OPTIONS|TRACE)$/.test(method));
+    }
 </script>
 {% endblock %}

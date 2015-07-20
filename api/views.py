@@ -1,5 +1,5 @@
-from django.contrib.auth.models import User
 from rest_framework import generics
+
 from rest_framework import permissions
 
 from api.serializers import *
@@ -28,16 +28,12 @@ class CreateOrRetrieveAllProducts(generics.ListCreateAPIView):
 
 
 permission_classes = (permissions.IsAuthenticatedOrReadOnly, IsOwnerOrReadOnly)
-
-
 class RetrieveOrUpdateOrDeleteProduct(generics.RetrieveUpdateDestroyAPIView, permissions.IsAuthenticated):
     queryset = Product.objects.all()
     serializer_class = ProductSerializer
 
 
 permission_classes = (permissions.IsAuthenticatedOrReadOnly, IsOwnerOrReadOnly)
-
-
 class CreateOrRetrieveAllCustomers(generics.ListCreateAPIView):
     queryset = Customer.objects.all()
     serializer_class = CustomerSerializer
@@ -52,26 +48,6 @@ permission_classes = (permissions.IsAuthenticatedOrReadOnly, IsOwnerOrReadOnly)
 class RetrieveOrUpdateOrDeleteCustomer(generics.RetrieveUpdateDestroyAPIView):
     queryset = Customer.objects.all()
     serializer_class = CustomerSerializer
-
-
-permission_classes = (permissions.IsAuthenticatedOrReadOnly, IsOwnerOrReadOnly)
-
-
-class CreateOrRetrieveAllAddresses(generics.ListCreateAPIView):
-    queryset = Address.objects.all()
-    serializer_class = AddressSerializer
-
-    def perform_create(self, serializer):
-        serializer.save(sales_person=self.request.user)
-
-#
-permission_classes = (permissions.IsAuthenticatedOrReadOnly, IsOwnerOrReadOnly)
-
-
-class RetrieveOrUpdateOrDeleteAddress(generics.RetrieveUpdateDestroyAPIView):
-    queryset = Address.objects.all()
-    serializer_class = AddressSerializer
-
 
 permission_classes = (permissions.IsAuthenticatedOrReadOnly, IsOwnerOrReadOnly)
 

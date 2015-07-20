@@ -1,0 +1,79 @@
+{% extends 'post-login-template.html' %}
+{% load static %}
+{% block content %}
+    <section class="col-md-12">
+        <div class="col-md-10" style="margin-left: 8%;">
+            <h3 class="p_head"></h3>
+            <ul class="transaction-record-table">
+                <li class="transaction-record-table-headers">
+                    <div class="trans-id">
+                        SL. No.
+                    </div>
+                    <div class="trans-prod">
+                        Product
+                    </div>
+                    <div class="trans-sales-person">
+                        Sales Person
+                    </div>
+                    <div class="trans-customer">
+                        Customer
+                    </div>
+                    <div class="trans-cost">
+                        Cost
+                    </div>
+                    <div class="trans-timestamp">
+                        Timestamp
+                    </div>
+                </li>
+                <div id="transaction-table-rows">
+
+                </div>
+            </ul>
+
+            <div class="to_separate">
+                {#            <button class="btn btn_add" id="add-new-customer"></button>#}
+                {#            <button class="btn btn_add" id="cancel"> Cancel</button>#}
+            </div>
+        </div>
+    </section>
+{% endblock %}
+{% block javascript %}
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $.ajax({
+                url: '/api/GetAllTransactions/',
+                type: 'GET',
+                dataTpe: 'application/json',
+                data: {format: 'json'},
+                success: function (response) {
+                    var transactions = response;
+                    var transactionRecordHTML = "";
+                    for (var transactionIndex = 0; transactionIndex < transactions.length; transactionIndex++) {
+                        var transaction = transactions[transactionIndex];
+                        transactionRecordHTML = transactionRecordHTML + "<li class='product-record-item'>";
+                        transactionRecordHTML = transactionRecordHTML + "<div class='trans-id'>";
+                        transactionRecordHTML = transactionRecordHTML + transaction.trans_id.toString();
+                        transactionRecordHTML = transactionRecordHTML + "</div>";
+                        transactionRecordHTML = transactionRecordHTML + "<div class='trans-prod'>";
+                        transactionRecordHTML = transactionRecordHTML + transaction.product.toString();
+                        transactionRecordHTML = transactionRecordHTML + "</div>";
+                        transactionRecordHTML = transactionRecordHTML + "<div class='trans-sales-person'>";
+                        transactionRecordHTML = transactionRecordHTML + transaction.sales_person.toString();
+                        transactionRecordHTML = transactionRecordHTML + "</div>";
+                        transactionRecordHTML = transactionRecordHTML + "<div class='trans-customer'>";
+                        transactionRecordHTML = transactionRecordHTML + transaction.customer.toString();
+                        transactionRecordHTML = transactionRecordHTML + "</div>";
+                        transactionRecordHTML = transactionRecordHTML + "<div class='trans-cost'>";
+                        transactionRecordHTML = transactionRecordHTML + transaction.cost.toString();
+                        transactionRecordHTML = transactionRecordHTML + "</div>";
+                        transactionRecordHTML = transactionRecordHTML + "<div class='trans-timestamp'>";
+                        transactionRecordHTML = transactionRecordHTML + transaction.transaction_time.toString();
+                        transactionRecordHTML = transactionRecordHTML + "</div>";
+                        transactionRecordHTML = transactionRecordHTML + "</li>";
+                    }
+                    $('#transaction-table-rows').html(transactionRecordHTML);
+                }
+            });
+        });
+    </script>
+{% endblock %}

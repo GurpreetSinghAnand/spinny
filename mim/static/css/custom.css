@@ -574,6 +574,13 @@ legend {
     padding-left: 0px;
 }
 
+.transaction-record-table {
+    width: 100%;
+    float: left;
+    border: 1px solid #E9E9E9;
+    padding-left: 0px;
+}
+
 .customer-record-table-headers {
     background: #F6F6F6;
     list-style: none;
@@ -594,6 +601,16 @@ legend {
     text-align: center;
 }
 
+.transaction-record-table-headers {
+    background: #F6F6F6;
+    list-style: none;
+    width: 100%;
+    float: left;
+    padding: 5px 0px;
+    border-bottom: 1px solid #E9E9E9;
+    text-align: center;
+}
+
 .customer-record-item {
     float: left;
     width: 100%;
@@ -603,6 +620,14 @@ legend {
 }
 
 .product-record-item {
+    float: left;
+    width: 100%;
+    list-style: none;
+    text-align: center;
+    padding: 5px 0px;
+}
+
+.transaction-record-item {
     float: left;
     width: 100%;
     list-style: none;
@@ -637,6 +662,41 @@ legend {
 
 .cust-actions {
     width: 12%;
+    float: left;
+}
+
+.trans-id {
+    width: 14%;
+    float: left;
+}
+
+.trans-prod {
+    width: 14%;
+    float: left;
+}
+
+.trans-sales-person {
+    width: 14%;
+    float: left;
+}
+
+.trans-customer {
+    width: 14%;
+    float: left;
+}
+
+.trans-cost {
+    width: 14%;
+    float: left;
+}
+
+.trans-timestamp {
+    width: 14%;
+    float: left;
+}
+
+.trans-actions {
+    width: 14%;
     float: left;
 }
 
@@ -722,4 +782,8 @@ legend {
 
 .form_spacing hr {
     border-top: 1px solid #24C8FF;
+}
+
+a img {
+    cursor: hand;
 }

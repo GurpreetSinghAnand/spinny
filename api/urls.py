@@ -17,11 +17,6 @@ urlpatterns = [
     url(r'^RetrieveCustomerById/(?P<pk>[0-9]+)/$', csrf_exempt(views.RetrieveOrUpdateOrDeleteCustomer.as_view())),
     url(r'^UpdateCustomerById/(?P<pk>[0-9]+)/$', csrf_exempt(views.RetrieveOrUpdateOrDeleteCustomer.as_view())),
     url(r'^DeleteCustomerById/(?P<pk>[0-9]+)/$', csrf_exempt(views.RetrieveOrUpdateOrDeleteCustomer.as_view())),
-    url(r'^GetAllAddresses/$', csrf_exempt(views.CreateOrRetrieveAllAddresses.as_view())),
-    url(r'^PostNewAddress/$', csrf_exempt(views.CreateOrRetrieveAllAddresses.as_view())),
-    url(r'^RetrieveAddressById/(?P<pk>[0-9]+)/$', csrf_exempt(views.RetrieveOrUpdateOrDeleteAddress.as_view())),
-    url(r'^UpdateAddressById/(?P<pk>[0-9]+)/$', csrf_exempt(views.RetrieveOrUpdateOrDeleteAddress.as_view())),
-    url(r'^DeleteAddressById/(?P<pk>[0-9]+)/$', csrf_exempt(views.RetrieveOrUpdateOrDeleteAddress.as_view())),
     url(r'^GetAllTransactions/$', csrf_exempt(views.CreateOrRetrieveAllTransactions.as_view())),
     url(r'^PostNewTransaction/$', csrf_exempt(views.CreateOrRetrieveAllTransactions.as_view())),
     url(r'^RetrieveTransactionById/(?P<pk>[0-9]+)/$', csrf_exempt(views.RetrieveTransaction.as_view()))

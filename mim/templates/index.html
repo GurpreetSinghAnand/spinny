@@ -5,85 +5,79 @@
 <section class="col-md-12">
     <div class="col-md-12">
         <div class="form_spacing">
-            <form role="form">
-                {% csrf_token %}
-                <div class="col-md-12">
-                    <h3>Transaction </h3>
-                    <hr/>
-                    <div class="required-field-block" style="padding: 5px;">
-                        <div class="col-md-4">
-                            <label for="product"
-                                   style="height: 25px; vertical-align: middle; padding: 2px; margin: 2px;">Product:</label>
-                        </div>
-                        <div class="col-md-8" style="padding: 0px; margin: 0px; float: left;">
-                            <div class="col-md-12">
-                                <div class="col-md-6" style="padding: 0px; margin: 0px; float: left;">
-                                    <select id="product" name="product" class="form-control"
-                                            style="width: 160px; height: 25px; vertical-align: bottom;">
-                                    </select>
-                                </div>
-                                <div class="col-md-6"
-                                     style="padding-left: 12px; float: left;top: 10px; width: 25px; height: 25px;">
-                                    <a href="/mim/products/" id="add-new-product"
-                                       style="width: 25px; height: 25px;"><img src="{% static 'images/add.png' %}"
-                                                                               style="width: 25px; height: 25px;"></a>
-                                </div>
-                                <div class="col-md-6">
-                                    <div class="col-md-12" id="add-new-product-form">
-                                    </div>
-                                </div>
+            <div class="col-md-12">
+                <h3>Transaction </h3>
+                <hr/>
+                <div class="required-field-block" style="padding: 2px;">
+                    <div class="col-md-4">
+                        <label for="product"
+                               style="height: 25px; vertical-align: middle; padding: 2px; margin: 2px;">Product:</label>
+                    </div>
+                    <div class="col-md-8" style="padding: 0px; margin: 0px; float: left;">
+                        <div class="col-md-12">
+                            <div class="col-md-6" style="padding: 0px; margin: 0px; float: left;">
+                                <select id="product" name="product" class="form-control"
+                                        style="width: 168px; height: 32px; vertical-align: bottom;"
+                                        onchange="updateCost()">
+                                </select>
                             </div>
-                        </div>
-                    </div>
-                    <div class="required-field-block" style="padding: 5px;">
-                        <div class="col-md-4">
-                            <label for="sales-person"
-                                   style="height: 25px; vertical-align: middle; padding: 2px; margin: 2px;">Sales
-                                Person:</label>
-                        </div>
-                        <div class="col-md-8" style="padding-left: 12px; margin: 0px; float: left;">
-                            <label id="sales-person" name="sales-person"
-                                   style="width: 160px; height: 25px; vertical-align: middle; padding: 2px; margin: 2px;">{{
-                                username }}</label>
-                        </div>
-                    </div>
-                    <div class="required-field-block" style="padding: 5px;">
-                        <div class="col-md-4">
-                            <label for="customer"
-                                   style="height: 25px; padding: 2px; margin: 2px; vertical-align: middle;">Customer:</label>
-                        </div>
-                        <div class="col-md-8" style="padding: 0px; margin: 0px; float: left;">
-                            <div class="col-md-12">
-                                <div class="col-md-6" style="padding: 0px; margin: 0px; float: left;">
-                                    <select id="customer" name="customer" class="form-control"
-                                            style="width: 160px; height: 25px; vertical-align: bottom;">
-                                    </select>
-                                </div>
-                                <div class="col-md-6"
-                                     style="padding-left: 12px; float: left;top: 10px; width: 25px; height: 25px;">
-                                    <a href="/mim/customers/" id="add-new-customer"
-                                       style="width: 25px; height: 25px;"><img src="{% static 'images/add.png' %}"
-                                                                               style="width: 25px; height: 25px;"></a>
-                                </div>
+                            <div class="col-md-6"
+                                 style="padding-left: 12px; float: left;top: 10px; width: 25px; height: 25px;">
+                                <a href="/mim/products/" id="add-new-products"><img src="{% static 'images/add.png' %}"
+                                                                                    style="width: 32px; height: 32px;"></a>
                             </div>
+
                         </div>
                     </div>
-                    <div class="required-field-block" style="padding: 5px;">
-                        <div class="col-md-4">
-                            <label for="cost"
-                                   style="width: 160px; height: 25px; vertical-align: middle; padding: 2px; margin: 2px;">Cost:</label>
-                        </div>
-                        <div class="col-md-8" style="padding-left: 12px; margin: 0px; float: left;">
-                            <label id="cost" name="cost"
-                                   style="width: 160px; height: 25px; vertical-align: middle; padding: 2px; margin: 2px;">Rs.
-                                120</label>
-                        </div>
-                    </div>
-                    <button id="pay" name="pay" class="btn btn_login">Pay</button>
                 </div>
-            </form>
+                <div class="required-field-block" style="padding: 2px;">
+                    <div class="col-md-4">
+                        <label for="sales-person"
+                               style="height: 25px; vertical-align: middle; padding: 2px; margin: 2px;">Sales
+                            Person:</label>
+                    </div>
+                    <div class="col-md-8" style="padding-left: 12px; margin: 0px; float: left;">
+                        <label id="sales-person" name="sales-person"
+                               style="width: 160px; height: 25px; vertical-align: middle; padding: 2px; margin: 2px;">{{ username }}</label>
+                    </div>
+                </div>
+                <div class="required-field-block" style="padding: 2px;">
+                    <div class="col-md-4">
+                        <label for="customer"
+                               style="height: 25px; padding: 2px; margin: 2px; vertical-align: middle;">Customer:</label>
+                    </div>
+                    <div class="col-md-8" style="padding: 0px; margin: 0px; float: left;">
+                        <div class="col-md-12">
+                            <div class="col-md-6" style="padding: 0px; margin: 0px; float: left;">
+                                <select id="customer" name="customer" class="form-control"
+                                        style="width: 168px; height: 32px; vertical-align: bottom;"
+                                        onchange="displayCost();">
+                                </select>
+                            </div>
+                            <div class="col-md-6"
+                                 style="padding-left: 12px; float: left;top: 10px; width: 25px; height: 25px;">
+                                <a href="/mim/customers/" id="add-new-customer"
+                                   style="width: 25px; height: 25px;"><img src="{% static 'images/add.png' %}"
+                                                                           style="width: 32px; height: 32px;"></a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="required-field-block" style="padding: 2px;">
+                    <div class="col-md-4">
+                        <label for="cost"
+                               style="width: 160px; height: 25px; vertical-align: middle; padding: 2px; margin: 2px;">Cost:</label>
+                    </div>
+                    <div class="col-md-8" style="padding-left: 12px; margin: 0px; float: left;">
+                        <label id="cost" name="cost"
+                               style="width: 160px; height: 25px; vertical-align: middle; padding: 2px; margin: 2px;"></label>
+                    </div>
+                </div>
+                <button id="confirm-transactions" name="confirm-transactions" class="btn btn_login">Confirm
+                    Transaction
+                </button>
+            </div>
         </div>
-    </div>
     </div>
 
 </section>
@@ -93,22 +87,127 @@
 {% endblock %}
 {% block javascript %}
 <script type="application/javascript">
-    $('#add-new-customer').click(function () {
-        var newCustomerFormObj = $('#add-new-customer-form');
-        var newCustomerFormHTML = "<form role='form'>";
-        newCustomerFormHTML = newCustomerFormHTML + "{% csrf_token %}";
-        newCustomerFormHTML = newCustomerFormHTML + "<div class='col-md-12'>";
-        newCustomerFormHTML = newCustomerFormHTML + "<input type='text' id='cust-name' name='cust-name' placeholder='Customer Name'>";
-        newCustomerFormHTML = newCustomerFormHTML + "</div>";
-        newCustomerFormHTML = newCustomerFormHTML + "<div class='col-md-12'>";
-        newCustomerFormHTML = newCustomerFormHTML + "<input type='email' id='email' name='email' placeholder='Email'>";
-        newCustomerFormHTML = newCustomerFormHTML + "</div>";
-        newCustomerFormHTML = newCustomerFormHTML + "<div class='col-md-12'>";
-        newCustomerFormHTML = newCustomerFormHTML + "<input type='text' id='contact' name='contact' placeholder='Contact'>";
-        newCustomerFormHTML = newCustomerFormHTML + "</div>";
-        newCustomerFormHTML = newCustomerFormHTML + "</form>";
-        newCustomerFormObj.html(newCustomerFormHTML);
+    $(document).ready(function () {
+        setCustomerList();
+        setProductList();
+        updateCost();
+    });
+    $('#confirm-transactions').click(function () {
+        var product = $('#product option:selected').val();
+        var cost = $('#cost').html().toString().substring(2, $('#cost').html().toString().length);
+        var sales_person = $('#sales-person').html().toString();
+        var customer = $('#customer option:selected').val();
+        var transaction = {};
+        transaction.product = product;
+        transaction.sales_person = sales_person;
+        transaction.customer = customer;
+        transaction.cost = cost;
+        {#        transaction.timestamp = $.now()#}
+        transaction.csrfmiddlewaretoken = getCookie('csrftoken');
+        $.ajaxSetup({
+            beforeSend: function (xhr, settings) {
+                if (!csrfSafeMethod(settings.type) && !this.crossDomain) {
+                    xhr.setRequestHeader("X-CSRFToken", getCookie('csrftoken'));
+                }
+            }
+        });
+        var transactionJSONObject = JSON.stringify(transaction, "\n");
+        $.ajax({
+            headers: {"Authorization": "Basic " + window.btoa("spinny:spinny")},
+            url: '/api/PostNewTransaction/',
+            type: 'POST',
+            contentType: 'application/json',
+            dataType: 'json',
+            data: transactionJSONObject,
+            success: function (response) {
+                alert('Transaction Completed!');
+            }
+        });
+        window.location.reload();
+    });
+    function getCookie(name) {
+        var cookieValue = null;
+        if (document.cookie && document.cookie != '') {
+            var cookies = document.cookie.split(';');
+            for (var i = 0; i < cookies.length; i++) {
+                var cookie = jQuery.trim(cookies[i]);
+                if (cookie.substring(0, name.length + 1) == (name + '=')) {
+                    cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                    break;
+                }
+            }
+        }
+        return cookieValue;
+    }
+    function setCustomerList() {
+        var customerListObject = $('#customer');
+        var customerArray = function () {
+            var customerObjectArray = null;
+            $.ajax({
+                async: false,
+                url: '/api/GetAllCustomers/',
+                contentType: 'application/json',
+                data: {format: 'json'},
+                type: 'GET',
+                success: function (response) {
+                    customerObjectArray = response;
+                }
+            });
+            return customerObjectArray;
+        }();
+        var customerListHTML = "";
+        for (var customerIndex = 0; customerIndex < customerArray.length; customerIndex++) {
+            var customer = customerArray[customerIndex];
+            customerListHTML = customerListHTML + "<option value='" + customer.cust_id + "' style='font-family: Arial; font-size: 12px; font-weight: normal'>" + customer.cust_name + "</option>"
+        }
+        customerListObject.html(customerListHTML);
+    }
 
-    })
+    function setProductList() {
+        var productListObject = $('#product');
+        var productArray = function () {
+            var productObjectArray = null;
+            $.ajax({
+                async: false,
+                url: '/api/GetAllProducts/',
+                contentType: 'application/json',
+                data: {format: 'json'},
+                type: 'GET',
+                success: function (response) {
+                    productObjectArray = response;
+                }
+            });
+            return productObjectArray;
+        }();
+        var productListHTML = "";
+        for (var productIndex = 0; productIndex < productArray.length; productIndex++) {
+            var product = productArray[productIndex];
+            productListHTML = productListHTML + "<option value='" + product.prod_id + "' style='font-family: Arial; font-size: 12px; font-weight: normal'>" + product.display_name + "</option>"
+        }
+        productListObject.html(productListHTML);
+    }
+    function updateCost() {
+        var prod_id = $("#product option:selected").val();
+        var costObject = $('#cost');
+        var productArray = function () {
+            var productRecord = null;
+            $.ajax({
+                async: false,
+                url: '/api/RetrieveProductById/' + prod_id + '/',
+                contentType: 'application/json',
+                data: {format: 'json'},
+                type: 'GET',
+                success: function (response) {
+                    productRecord = response;
+                }
+            });
+            return productRecord;
+        }();
+        var costObjectHTML = "&#8377; " + productArray.cost.toString();
+        costObject.html(costObjectHTML);
+    }
+    function csrfSafeMethod(method) {
+        return (/^(GET|HEAD|OPTIONS|TRACE)$/.test(method));
+    }
 </script>
 {% endblock %}

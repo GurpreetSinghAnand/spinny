@@ -25,7 +25,9 @@ SECRET_KEY = '=5a(l3vqy7!f)flqqo+fl!x=q8p7l-$xflnyw)xls4heh)rwtk'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = [
+    # 'spinny',
+]
 
 
 # Application definition
