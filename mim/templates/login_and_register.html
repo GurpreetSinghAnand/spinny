@@ -1,0 +1,38 @@
+{% extends 'pre-login-template.html' %}
+{% load static %}
+{% block title %}MIM | Mobile Inventory Manager {% endblock %}
+{% block content %}
+<section class="col-md-12">
+    <div class="col-md-12 pgname">
+        <h3>MIM Sales Login</h3>
+
+        <p>Pellentesque habitant morbi tristique senectus et netus et malesuada Pellentesque habitant morbi
+            tristique senectus et netus et malesuada</p>
+    </div>
+
+</section>
+<section class="col-md-12">
+    <div class="col-md-12">
+        <div class="form_spacing">
+            <form role="form" action="/mim/auth/" method="post">
+                {% csrf_token %}
+                <h3>Sign In </h3>
+                <hr/>
+                <p>If you have an account with us , please login. </p>
+
+                <div class="required-field-block">
+                    <input type="text" placeholder="Username" name="username" id="username" class="form-control">
+
+                </div>
+
+                <div class="required-field-block">
+                    <input type="password" placeholder="Password" name="password" id="password" class="form-control">
+                </div>
+                <input type="submit" value="Forget Your Password" class="btn btn_forget">
+                <input type="submit" value="Sign In" class="btn btn_login">
+            </form>
+        </div>
+    </div>
+
+</section>
+{% endblock %}

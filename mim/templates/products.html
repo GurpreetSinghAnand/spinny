@@ -1,0 +1,127 @@
+{% extends 'post-login-template.html' %}
+{% load static %}
+{% block content %}
+<section class="col-md-12">
+    <div class="col-md-8" style="margin-left: 15%;">
+        <h3 class="p_head"></h3>
+        <ul class="product-record-table">
+            <li class="product-record-table-headers">
+                <a href="#order-by-id" id="order-by-id">
+                    <input type="hidden" value="" id="id-direction">
+
+                    <div class="prod-id">
+                        SL. No.
+                    </div>
+                </a>
+                <a href="#order-by-name" id="order-by-name">
+                    <input type="hidden" value="" id="name-direction">
+
+                    <div class="prod-name">
+                        Name
+                    </div>
+                </a>
+                <a href="#order-by-cost" id="order-by-cost">
+                    <input type="hidden" value="" id="cost-direction">
+
+                    <div class="prod-cost">
+                        Cost
+                    </div>
+                </a>
+                <a href="#order-by-brand" id="order-by-brand">
+                    <input type="hidden" value="" id="brand-direction">
+
+                    <div class="prod-brand">
+                        Brand
+                    </div>
+                </a>
+
+                <div class="prod-actions">
+                    Actions
+                </div>
+            </li>
+            <div id="product-table-rows">
+
+            </div>
+        </ul>
+
+        <div class="to_separate">
+            <button class="btn btn_add" id="add-new-product"> + Add</button>
+            <button class="btn btn_add" id="cancel"> Cancel</button>
+        </div>
+    </div>
+</section>
+<section class="col-md-12">
+    <div class="col-md-8" style="margin-left: 15%;">
+        <div id="new-product-form" class="hide">
+            <h3 class="p_head">Add New Product</h3>
+
+            <div class="required-field-block">
+                <input type="text" id="name" name="name" placeholder="Name" class="form-control">
+            </div>
+            <div class="required-field-block">
+                <input type="text" id="cost" name="cost" placeholder="Cost" class="form-control">
+            </div>
+            <div class="required-field-block">
+                <input type="text" id="brand" name="brand" placeholder="Brand" class="form-control">
+            </div>
+            <button class="btn btn_add" id="new-product-submit">Submit</button>
+        </div>
+    </div>
+</section>
+{% endblock %}
+{% block javascript %}
+<script type="text/javascript">
+    $(document).ready(function () {
+        $.ajax({
+            url: '/api/GetAllProducts/',
+            type: 'GET',
+            dataTpe: 'application/json',
+            data: {format: 'json'},
+            success: function (response) {
+                var products = response;
+                var productRecordHTML = "";
+                for (var productIndex = 0; productIndex < products.length; productIndex++) {
+                    var product = products[productIndex];
+                    productRecordHTML = productRecordHTML + "<li class='product-record-item'>";
+                    productRecordHTML = productRecordHTML + "<div class='prod-id'>";
+                    productRecordHTML = productRecordHTML + product.prod_id.toString();
+                    productRecordHTML = productRecordHTML + "</div>";
+                    productRecordHTML = productRecordHTML + "<div class='prod-name'>";
+                    productRecordHTML = productRecordHTML + product.display_name.toString();
+                    productRecordHTML = productRecordHTML + "</div>";
+                    productRecordHTML = productRecordHTML + "<div class='prod-cost'>";
+                    productRecordHTML = productRecordHTML + product.cost.toString();
+                    productRecordHTML = productRecordHTML + "</div>";
+                    productRecordHTML = productRecordHTML + "<div class='prod-brand'>";
+                    productRecordHTML = productRecordHTML + product.brand.toString();
+                    productRecordHTML = productRecordHTML + "</div>";
+                    productRecordHTML = productRecordHTML + "</li>";
+                }
+                $('#product-table-rows').html(productRecordHTML);
+            }
+        });
+    });
+    $('#add-new-product').click(function () {
+        $('#new-product-form').attr('class', 'show');
+    });
+    $('#cancel').click(function () {
+        $('#new-product-form').attr('class', 'hide');
+    });
+    $('#new-product-submit').click(function () {
+        var display_name = $('#name').val();
+        var cost = $('#cost').val();
+        var brand = $('#brand').val();
+        $.ajax({
+            url: '/api/PostNewProduct/',
+            type: 'POST',
+            contentTpe: 'application/json',
+            headers: {"Authorization": "Basic " + window.btoa("spinny:spinny")},
+            data: {display_name: display_name, cost: cost, brand: brand},
+            success: function (response) {
+                alert('New Product Added!');
+            }
+        });
+        window.location.reload();
+    })
+</script>
+{% endblock %}

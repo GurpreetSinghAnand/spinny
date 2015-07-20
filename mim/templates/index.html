@@ -1,0 +1,114 @@
+{% extends 'post-login-template.html' %}
+{% load staticfiles %}
+{% block title %}MIM | Mobile Inventory Manager{% endblock %}
+{% block content %}
+<section class="col-md-12">
+    <div class="col-md-12">
+        <div class="form_spacing">
+            <form role="form">
+                {% csrf_token %}
+                <div class="col-md-12">
+                    <h3>Transaction </h3>
+                    <hr/>
+                    <div class="required-field-block" style="padding: 5px;">
+                        <div class="col-md-4">
+                            <label for="product"
+                                   style="height: 25px; vertical-align: middle; padding: 2px; margin: 2px;">Product:</label>
+                        </div>
+                        <div class="col-md-8" style="padding: 0px; margin: 0px; float: left;">
+                            <div class="col-md-12">
+                                <div class="col-md-6" style="padding: 0px; margin: 0px; float: left;">
+                                    <select id="product" name="product" class="form-control"
+                                            style="width: 160px; height: 25px; vertical-align: bottom;">
+                                    </select>
+                                </div>
+                                <div class="col-md-6"
+                                     style="padding-left: 12px; float: left;top: 10px; width: 25px; height: 25px;">
+                                    <a href="/mim/products/" id="add-new-product"
+                                       style="width: 25px; height: 25px;"><img src="{% static 'images/add.png' %}"
+                                                                               style="width: 25px; height: 25px;"></a>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="col-md-12" id="add-new-product-form">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="required-field-block" style="padding: 5px;">
+                        <div class="col-md-4">
+                            <label for="sales-person"
+                                   style="height: 25px; vertical-align: middle; padding: 2px; margin: 2px;">Sales
+                                Person:</label>
+                        </div>
+                        <div class="col-md-8" style="padding-left: 12px; margin: 0px; float: left;">
+                            <label id="sales-person" name="sales-person"
+                                   style="width: 160px; height: 25px; vertical-align: middle; padding: 2px; margin: 2px;">{{
+                                username }}</label>
+                        </div>
+                    </div>
+                    <div class="required-field-block" style="padding: 5px;">
+                        <div class="col-md-4">
+                            <label for="customer"
+                                   style="height: 25px; padding: 2px; margin: 2px; vertical-align: middle;">Customer:</label>
+                        </div>
+                        <div class="col-md-8" style="padding: 0px; margin: 0px; float: left;">
+                            <div class="col-md-12">
+                                <div class="col-md-6" style="padding: 0px; margin: 0px; float: left;">
+                                    <select id="customer" name="customer" class="form-control"
+                                            style="width: 160px; height: 25px; vertical-align: bottom;">
+                                    </select>
+                                </div>
+                                <div class="col-md-6"
+                                     style="padding-left: 12px; float: left;top: 10px; width: 25px; height: 25px;">
+                                    <a href="/mim/customers/" id="add-new-customer"
+                                       style="width: 25px; height: 25px;"><img src="{% static 'images/add.png' %}"
+                                                                               style="width: 25px; height: 25px;"></a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="required-field-block" style="padding: 5px;">
+                        <div class="col-md-4">
+                            <label for="cost"
+                                   style="width: 160px; height: 25px; vertical-align: middle; padding: 2px; margin: 2px;">Cost:</label>
+                        </div>
+                        <div class="col-md-8" style="padding-left: 12px; margin: 0px; float: left;">
+                            <label id="cost" name="cost"
+                                   style="width: 160px; height: 25px; vertical-align: middle; padding: 2px; margin: 2px;">Rs.
+                                120</label>
+                        </div>
+                    </div>
+                    <button id="pay" name="pay" class="btn btn_login">Pay</button>
+                </div>
+            </form>
+        </div>
+    </div>
+    </div>
+
+</section>
+{% endblock %}
+{% block js %}
+
+{% endblock %}
+{% block javascript %}
+<script type="application/javascript">
+    $('#add-new-customer').click(function () {
+        var newCustomerFormObj = $('#add-new-customer-form');
+        var newCustomerFormHTML = "<form role='form'>";
+        newCustomerFormHTML = newCustomerFormHTML + "{% csrf_token %}";
+        newCustomerFormHTML = newCustomerFormHTML + "<div class='col-md-12'>";
+        newCustomerFormHTML = newCustomerFormHTML + "<input type='text' id='cust-name' name='cust-name' placeholder='Customer Name'>";
+        newCustomerFormHTML = newCustomerFormHTML + "</div>";
+        newCustomerFormHTML = newCustomerFormHTML + "<div class='col-md-12'>";
+        newCustomerFormHTML = newCustomerFormHTML + "<input type='email' id='email' name='email' placeholder='Email'>";
+        newCustomerFormHTML = newCustomerFormHTML + "</div>";
+        newCustomerFormHTML = newCustomerFormHTML + "<div class='col-md-12'>";
+        newCustomerFormHTML = newCustomerFormHTML + "<input type='text' id='contact' name='contact' placeholder='Contact'>";
+        newCustomerFormHTML = newCustomerFormHTML + "</div>";
+        newCustomerFormHTML = newCustomerFormHTML + "</form>";
+        newCustomerFormObj.html(newCustomerFormHTML);
+
+    })
+</script>
+{% endblock %}

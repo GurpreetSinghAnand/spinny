@@ -1,0 +1,159 @@
+{% extends 'post-login-template.html' %}
+{% load static %}
+{% block content %}
+<section class="col-md-12">
+    <div class="col-md-10" style="margin-left: 8%;">
+        <h3 class="p_head"></h3>
+        <ul class="customer-record-table">
+            <li class="customer-record-table-headers">
+                <a href="#order-by-id" id="order-by-id">
+                    <input type="hidden" value="" id="id-direction">
+
+                    <div class="cust-id">
+                        SL. No.
+                    </div>
+                </a>
+                <a href="#order-by-name" id="order-by-name">
+                    <input type="hidden" value="" id="name-direction">
+
+                    <div class="cust-name">
+                        Name
+                    </div>
+                </a>
+                <a href="#order-by-email" id="order-by-email">
+                    <input type="hidden" value="" id="email-direction">
+
+                    <div class="cust-email">
+                        Email
+                    </div>
+                </a>
+                <a href="#order-by-contact" id="order-by-contact">
+                    <input type="hidden" value="" id="contact-direction">
+
+                    <div class="cust-contact">
+                        Contact
+                    </div>
+                </a>
+                <a href="#order-by-address" id="order-by-address">
+                    <input type="hidden" value="" id="address-direction">
+
+                    <div class="cust-address">
+                        Address
+                    </div>
+                </a>
+
+                <div class="cust-actions">
+                    Actions
+                </div>
+            </li>
+            <div id="customer-table-rows">
+
+            </div>
+        </ul>
+
+        <div class="to_separate">
+            <button class="btn btn_add" id="add-new-customer"> + Add</button>
+            <button class="btn btn_add" id="cancel"> Cancel</button>
+        </div>
+    </div>
+</section>
+<section class="col-md-12">
+    <div class="col-md-8" style="margin-left: 15%;">
+        <div id="new-customer-form" class="hide">
+            <h3 class="p_head">Add New Customer</h3>
+
+            <div class="required-field-block">
+                <input type="text" id="name" name="name" placeholder="Name" class="form-control">
+            </div>
+            <div class="required-field-block">
+                <input type="email" id="email" name="email" placeholder="Email" class="form-control">
+            </div>
+            <div class="required-field-block">
+                <input type="text" id="contact" name="contact" placeholder="Contact" class="form-control">
+            </div>
+
+            <div class="required-field-block">
+
+            </div>
+            <button class="btn btn_add" id="show">Submit</button>
+        </div>
+    </div>
+</section>
+{% endblock %}
+{% block javascript %}
+<script type="text/javascript">
+    $(document).ready(function () {
+        $.ajax({
+            url: '/api/GetAllCustomers/',
+            type: 'GET',
+            dataTpe: 'application/json',
+            data: {format: 'json'},
+            success: function (response) {
+                var customers = response;
+                var customerRecordHTML = "";
+                for (var customerIndex = 0; customerIndex < customers.length; customerIndex++) {
+                    var customer = customers[customerIndex];
+                    customerRecordHTML = customerRecordHTML + "<li class='product-record-item'>";
+                    customerRecordHTML = customerRecordHTML + "<div class='cust-id'>";
+                    customerRecordHTML = customerRecordHTML + customer.cust_id.toString();
+                    customerRecordHTML = customerRecordHTML + "</div>";
+                    customerRecordHTML = customerRecordHTML + "<div class='cust-name'>";
+                    customerRecordHTML = customerRecordHTML + customer.cust_name.toString();
+                    customerRecordHTML = customerRecordHTML + "</div>";
+                    customerRecordHTML = customerRecordHTML + "<div class='cust-email'>";
+                    customerRecordHTML = customerRecordHTML + customer.email.toString();
+                    customerRecordHTML = customerRecordHTML + "</div>";
+                    customerRecordHTML = customerRecordHTML + "<div class='cust-contact'>";
+                    customerRecordHTML = customerRecordHTML + customer.contact.toString();
+                    customerRecordHTML = customerRecordHTML + "</div>";
+                    customerRecordHTML = customerRecordHTML + "<div class='cust-address'>";
+                    var add_id = customer.add.toString();
+                    var address = function () {
+                        var temp;
+                        var tempAdd = "";
+                        $.ajax({
+                            async: false,
+                            url: '/api/RetrieveAddressById/' + add_id + '/',
+                            type: 'GET',
+                            dataTpe: 'application/json',
+                            data: {format: 'json'},
+                            success: function (response) {
+                                temp = response;
+                                tempAdd = tempAdd + temp.house_no.toString() + ',\n' + temp.street_name.toString() + ',\n' + temp.locality.toString() + ',\n' + temp.landmark.toString() + ',\n' + temp.city.toString() + ',\n' + temp.state_or_province.toString() + ',\n' + temp.pincode.toString();
+                            }
+
+                        });
+                        return tempAdd;
+                    }();
+                    customerRecordHTML = customerRecordHTML + address;
+                    customerRecordHTML = customerRecordHTML + "</div>";
+                    customerRecordHTML = customerRecordHTML + "</li>";
+                }
+                $('#customer-table-rows').html(customerRecordHTML);
+            }
+        });
+    });
+    $('#new-product-submit').click(function () {
+        var display_name = $('#name').val();
+        var cost = $('#cost').val();
+        var brand = $('#brand').val();
+        $.ajax({
+            url: '/api/PostNewCustomer/',
+            type: 'POST',
+            contentTpe: 'application/json',
+            headers: {"Authorization": "Basic " + window.btoa("spinny:spinny")},
+            data: {display_name: display_name, cost: cost, brand: brand},
+            success: function (response) {
+                alert('New Product Added!');
+            }
+        });
+        window.location.reload();
+    });
+    $('#add-new-customer').click(function () {
+        $('#new-customer-form').attr('class', 'show');
+    });
+    $('#cancel').click(function () {
+        $('#new-customer-form').attr('class', 'hide');
+    });
+</script>
+{% endblock %}
