@@ -1,4 +1,4 @@
-{% load static %}
+{% load staticfiles %}
 <html>
 <head>
     <meta charset="utf-8">
@@ -19,12 +19,8 @@
     <![endif]-->
 </head>
 <body>
-<div class="container">
     <header class="space">
-        <div class="col-md-2">
-            <img src="images/logo.png" class="img-responsive">
-        </div>
-        <div class="col-md-12 space">
+        <div class="col-md-12">
             <nav class="navbar navbar-default" role="navigation">
                 <div class="container-fluid">
                     <!-- Brand and toggle get grouped for better mobile display -->
@@ -44,7 +40,6 @@
         </div>
     </header>
     {% block content %}{% endblock %}
-</div>
 <footer class="space">
     <div style="">
         <div class="col-md-12 dark_grey"

@@ -14,7 +14,7 @@
 <section class="col-md-12">
     <div class="col-md-12">
         <div class="form_spacing">
-            <form role="form" action="/mim/auth/" method="post">
+            <form role="form" action="/mim/auth/" method="post" id="login-form">
                 {% csrf_token %}
                 <h3>Sign In </h3>
                 <hr/>
@@ -35,4 +35,19 @@
     </div>
 
 </section>
+{% endblock %}
+{% block javascript %}
+    <script type="application/javascript">
+        $(document).ready(function () {
+            var rawURL = window.location.href;
+            var next = "";
+            if (rawURL.indexOf('?') != -1) {
+                next = rawURL.toString().split('?')[1].split('=')[1];
+                var loginFormObject = $('#login-form');
+                var loginFormHTML = loginFormObject.html();
+                loginFormHTML = loginFormHTML + "<input type='hidden' value='" + next + "' id='next' name='next'>";
+                loginFormObject.html(loginFormHTML);
+            }
+        })
+    </script>
 {% endblock %}

@@ -6,35 +6,18 @@
         <h3 class="p_head"></h3>
         <ul class="product-record-table">
             <li class="product-record-table-headers">
-                <a href="#order-by-id" id="order-by-id">
-                    <input type="hidden" value="" id="id-direction">
-
-                    <div class="prod-id">
-                        SL. No.
-                    </div>
-                </a>
-                <a href="#order-by-name" id="order-by-name">
-                    <input type="hidden" value="" id="name-direction">
-
-                    <div class="prod-name">
-                        Name
-                    </div>
-                </a>
-                <a href="#order-by-cost" id="order-by-cost">
-                    <input type="hidden" value="" id="cost-direction">
-
-                    <div class="prod-cost">
-                        Cost
-                    </div>
-                </a>
-                <a href="#order-by-brand" id="order-by-brand">
-                    <input type="hidden" value="" id="brand-direction">
-
-                    <div class="prod-brand">
-                        Brand
-                    </div>
-                </a>
-
+                <div class="prod-id">
+                    SL. No.
+                </div>
+                <div class="prod-name">
+                    Name
+                </div>
+                <div class="prod-cost">
+                    Cost
+                </div>
+                <div class="prod-brand">
+                    Brand
+                </div>
                 <div class="prod-actions">
                     Actions
                 </div>
@@ -72,6 +55,7 @@
 {% block javascript %}
 <script type="text/javascript">
     $(document).ready(function () {
+        $('[data-toggle="tooltip"]').tooltip();
         $.ajax({
             url: '/api/GetAllProducts/',
             type: 'GET',
@@ -83,17 +67,27 @@
                 for (var productIndex = 0; productIndex < products.length; productIndex++) {
                     var product = products[productIndex];
                     productRecordHTML = productRecordHTML + "<li class='product-record-item'>";
-                    productRecordHTML = productRecordHTML + "<div class='prod-id'>";
+                    productRecordHTML = productRecordHTML + "<div class='prod-id' id='record-" + product.prod_id.toString() + "-prod-id'>";
                     productRecordHTML = productRecordHTML + product.prod_id.toString();
                     productRecordHTML = productRecordHTML + "</div>";
-                    productRecordHTML = productRecordHTML + "<div class='prod-name'>";
+                    productRecordHTML = productRecordHTML + "<div class='prod-name' id='record-" + product.prod_id.toString() + "-prod-name'>";
                     productRecordHTML = productRecordHTML + product.display_name.toString();
                     productRecordHTML = productRecordHTML + "</div>";
-                    productRecordHTML = productRecordHTML + "<div class='prod-cost'>";
+                    productRecordHTML = productRecordHTML + "<div class='prod-cost' id='record-" + product.prod_id.toString() + "-prod-cost'>";
                     productRecordHTML = productRecordHTML + product.cost.toString();
                     productRecordHTML = productRecordHTML + "</div>";
-                    productRecordHTML = productRecordHTML + "<div class='prod-brand'>";
+                    productRecordHTML = productRecordHTML + "<div class='prod-brand' id='record-" + product.prod_id.toString() + "-prod-brand'>";
                     productRecordHTML = productRecordHTML + product.brand.toString();
+                    productRecordHTML = productRecordHTML + "</div>";
+                    productRecordHTML = productRecordHTML + "<div class='prod-actions'>";
+                    productRecordHTML = productRecordHTML + "<div class='col-md-12' style='width: 75px; height: 20px;vertical-align: bottom; padding:0px; margin: 0px;'>";
+                    productRecordHTML = productRecordHTML + "<div class='col-md-6'>";
+                    productRecordHTML = productRecordHTML + "<img src='/static/images/edit.png' style='width: 20px; height: 20px;vertical-align: bottom; padding:0px; margin: 0px;' data-toggle='tooltip' title='Edit Record' id='edit-record-" + product.prod_id.toString() + "' onclick='editRecord(" + product.prod_id.toString() + ")'>";
+                    productRecordHTML = productRecordHTML + "</div>";
+                    productRecordHTML = productRecordHTML + "<div class='col-md-6'>";
+                    productRecordHTML = productRecordHTML + "<img src='/static/images/delete.png' style='width: 20px; height: 20px;vertical-align: bottom; padding:0px; margin: 0px;' data-toggle='tooltip' title='Delete Record' tool-tip='Delete Record' id='delete-record-" + product.prod_id.toString() + "' onclick='deleteRecord(" + product.prod_id.toString() + ")'>";
+                    productRecordHTML = productRecordHTML + "</div>";
+                    productRecordHTML = productRecordHTML + "</div>";
                     productRecordHTML = productRecordHTML + "</div>";
                     productRecordHTML = productRecordHTML + "</li>";
                 }
@@ -101,6 +95,93 @@
             }
         });
     });
+    function editRecord(id) {
+        var editObject = $('#edit-record-' + id.toString());
+        var deleteObject = $('#delete-record-' + id.toString());
+        var currentImagePath = editObject.attr('src').toString();
+        var editImagePath = '/static/images/edit.png';
+        var saveImagePath = '/static/images/save.png';
+        if (currentImagePath.localeCompare(editImagePath) == 0) {
+            editObject.attr('src', saveImagePath);
+            editObject.attr('style', 'width: 25px; height: 25px;vertical-align: bottom; padding:0px; margin: 0px;');
+            editObject.attr('title', 'Update Record');
+            deleteObject.attr('src', '/static/images/cancel.png');
+            deleteObject.attr('style', 'width: 25px; height: 25px;vertical-align: bottom; padding:0px; margin: 0px;');
+            deleteObject.attr('title', 'Cancel');
+            deleteObject.attr('onclick', 'cancelUpdateRecord(' + id + ')');
+            var prodIDObject = $('#record-' + id.toString() + '-prod-id');
+            var prodNameObject = $('#record-' + id.toString() + '-prod-name');
+            var prodCostObject = $('#record-' + id.toString() + '-prod-cost');
+            var prodBrandObject = $('#record-' + id.toString() + '-prod-brand');
+            var prodID = prodIDObject.html();
+            var prodName = prodNameObject.html();
+            var prodCost = prodCostObject.html();
+            var prodBrand = prodBrandObject.html();
+            var prodNameObjectHTML = "<input type='text' value='" + prodName + "' id='record-tb-" + id.toString() + "-prod-name'>";
+            prodNameObject.html(prodNameObjectHTML);
+            var prodCostObjectHTML = "<input type='text' value='" + prodCost + "' id='record-tb-" + id.toString() + "-prod-cost'>";
+            prodCostObject.html(prodCostObjectHTML);
+            var prodBrandObjectHTML = "<input type='text' value='" + prodBrand + "' id='record-tb-" + id.toString() + "-prod-brand'>";
+            prodBrandObject.html(prodBrandObjectHTML);
+        }
+        else {
+            editObject.attr('src', '/static/images/edit.png');
+            editObject.attr('style', 'width: 20px; height: 20px;vertical-align: bottom; padding:0px; margin: 0px;');
+            editObject.attr('title', 'Edit Record');
+            deleteObject.attr('src', '/static/images/delete.png');
+            deleteObject.attr('style', 'width: 20px; height: 25px;vertical-align: bottom; padding:0px; margin: 0px;');
+            deleteObject.attr('title', 'Delete Record');
+            deleteObject.removeAttr('onclick');
+            prodIDObject = $('#record-' + id.toString() + '-prod-id');
+            prodNameObject = $('#record-tb-' + id.toString() + '-prod-name');
+            prodCostObject = $('#record-tb-' + id.toString() + '-prod-cost');
+            prodBrandObject = $('#record-tb-' + id.toString() + '-prod-brand');
+            prodID = prodIDObject.html();
+            prodName = prodNameObject.val();
+            prodCost = prodCostObject.val();
+            prodBrand = prodBrandObject.val();
+            prodNameObject.html(prodName);
+            prodCostObject.html(prodCost);
+            prodBrandObject.html(prodBrand);
+            var product = {};
+            product.display_name = prodName;
+            product.cost = prodCost;
+            product.brand = prodBrand;
+            product.csrfmiddlewaretoken = getCookie('csrftoken');
+            var productJSONObject = JSON.stringify(product, "\n");
+            updateRecord(id, productJSONObject);
+        }
+
+    }
+    function deleteRecord(id) {
+        alert("Do you want to continue?");
+        $.ajaxSetup({
+            beforeSend: function (xhr, settings) {
+                if (!csrfSafeMethod(settings.type) && !this.crossDomain) {
+                    xhr.setRequestHeader("X-CSRFToken", getCookie('csrftoken'));
+                }
+            }
+        });
+        $.ajax({
+            async: false,
+            url: '/api/DeleteProductById/' + id + '/',
+            type: 'DELETE',
+            dataType: 'json',
+            contentType: 'application/json',
+            headers: {"Authorization": "Basic " + window.btoa("spinny:spinny")},
+            success: function (response) {
+                alert('Record Deleted!');
+            },
+            error: function (error) {
+                alert(error.detail);
+            }
+
+        });
+        window.location.reload();
+    }
+    function cancelUpdateRecord(id) {
+        window.location.reload();
+    }
     $('#add-new-product').click(function () {
         $('#new-product-form').attr('class', 'show');
     });
@@ -154,6 +235,31 @@
     }
     function csrfSafeMethod(method) {
         return (/^(GET|HEAD|OPTIONS|TRACE)$/.test(method));
+    }
+    function updateRecord(record_id, JSONObject) {
+        $.ajaxSetup({
+            beforeSend: function (xhr, settings) {
+                if (!csrfSafeMethod(settings.type) && !this.crossDomain) {
+                    xhr.setRequestHeader("X-CSRFToken", getCookie('csrftoken'));
+                }
+            }
+        });
+        $.ajax({
+            async: false,
+            url: '/api/UpdateProductById/' + record_id + '/',
+            type: 'PUT',
+            dataType: 'json',
+            contentType: 'application/json',
+            headers: {"Authorization": "Basic " + window.btoa("spinny:spinny")},
+            data: JSONObject,
+            success: function (response) {
+                alert('Record Updated!');
+            },
+            error: function (error) {
+                alert(error.detail);
+            }
+        });
+        window.location.reload();
     }
 </script>
 {% endblock %}

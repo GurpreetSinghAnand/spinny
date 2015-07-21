@@ -1,6 +1,7 @@
 from django.shortcuts import render_to_response
 from django.http import HttpResponseRedirect
 from django.contrib import auth
+from django.contrib.auth.decorators import login_required
 from django.core.context_processors import csrf
 
 def login(request):
@@ -8,23 +9,25 @@ def login(request):
     csrf_dict.update(csrf(request))
     return render_to_response('login.html', csrf_dict)
 
-
 def auth_view(request):
     username = request.POST.get('username', '')
     password = request.POST.get('password', '')
     user = auth.authenticate(username=username, password=password)
     if user is not None:
         auth.login(request, user)
-        return HttpResponseRedirect('/mim/index/')
+        if request.POST.has_key('next'):
+            return HttpResponseRedirect(request.POST['next'])
+        else:
+            return HttpResponseRedirect('/mim/index/')
     else:
         return HttpResponseRedirect('/mim/invalid/')
 
 
 def invalid_login(request):
-    if request.user.is_anonymous():
         return HttpResponseRedirect('/mim/login')
 
 
+@login_required(login_url='/mim/login/')
 def index(request):
     csrf_dict = {}
     csrf_dict.update(csrf(request))
@@ -35,6 +38,7 @@ def index(request):
         return render_to_response('login.html', csrf_dict)
 
 
+@login_required(login_url='/mim/login/')
 def products(request):
     csrf_dict = {}
     csrf_dict.update(csrf(request))
@@ -44,6 +48,8 @@ def products(request):
         csrf_dict.update({'errors': ['You are not an authorised user.']})
         return render_to_response('login.html', csrf_dict)
 
+
+@login_required(login_url='/mim/login/')
 def customers(request):
     csrf_dict = {}
     csrf_dict.update(csrf(request))
@@ -54,6 +60,7 @@ def customers(request):
         return render_to_response('login.html', csrf_dict)
 
 
+@login_required(login_url='/mim/login/')
 def transactions(request):
     csrf_dict = {}
     csrf_dict.update(csrf(request))
@@ -62,7 +69,6 @@ def transactions(request):
     else:
         csrf_dict.update({'errors': ['You are not an authorised user.']})
         return render_to_response('login.html', csrf_dict)
-
 
 def logout(request):
     csrf_dict = {}

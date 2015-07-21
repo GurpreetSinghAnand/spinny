@@ -31,8 +31,9 @@
             </ul>
 
             <div class="to_separate">
-                {#            <button class="btn btn_add" id="add-new-customer"></button>#}
-                {#            <button class="btn btn_add" id="cancel"> Cancel</button>#}
+                <label for="total-sales" id="total-sales">Total Sales:
+                    <button type="submit" id="total-sales-calculate-button">Calculate</button>
+                </label>
             </div>
         </div>
     </section>
@@ -50,23 +51,23 @@
                     var transactionRecordHTML = "";
                     for (var transactionIndex = 0; transactionIndex < transactions.length; transactionIndex++) {
                         var transaction = transactions[transactionIndex];
-                        transactionRecordHTML = transactionRecordHTML + "<li class='product-record-item'>";
-                        transactionRecordHTML = transactionRecordHTML + "<div class='trans-id'>";
+                        transactionRecordHTML = transactionRecordHTML + "<li class='product-record-item' >";
+                        transactionRecordHTML = transactionRecordHTML + "<div class='trans-id' id='record-" + (transactionIndex + 1) + "-trans-id'>";
                         transactionRecordHTML = transactionRecordHTML + transaction.trans_id.toString();
                         transactionRecordHTML = transactionRecordHTML + "</div>";
-                        transactionRecordHTML = transactionRecordHTML + "<div class='trans-prod'>";
+                        transactionRecordHTML = transactionRecordHTML + "<div class='trans-prod' id='record-" + (transactionIndex + 1) + "-trans-prod'>";
                         transactionRecordHTML = transactionRecordHTML + transaction.product.toString();
                         transactionRecordHTML = transactionRecordHTML + "</div>";
-                        transactionRecordHTML = transactionRecordHTML + "<div class='trans-sales-person'>";
+                        transactionRecordHTML = transactionRecordHTML + "<div class='trans-sales-person' id='record-" + (transactionIndex + 1) + "-trans-sales-person'>";
                         transactionRecordHTML = transactionRecordHTML + transaction.sales_person.toString();
                         transactionRecordHTML = transactionRecordHTML + "</div>";
-                        transactionRecordHTML = transactionRecordHTML + "<div class='trans-customer'>";
+                        transactionRecordHTML = transactionRecordHTML + "<div class='trans-customer' id='record-" + (transactionIndex + 1) + "-trans-customer'>";
                         transactionRecordHTML = transactionRecordHTML + transaction.customer.toString();
                         transactionRecordHTML = transactionRecordHTML + "</div>";
-                        transactionRecordHTML = transactionRecordHTML + "<div class='trans-cost'>";
+                        transactionRecordHTML = transactionRecordHTML + "<div class='trans-cost' id='record-" + (transactionIndex + 1) + "-trans-cost'>";
                         transactionRecordHTML = transactionRecordHTML + transaction.cost.toString();
                         transactionRecordHTML = transactionRecordHTML + "</div>";
-                        transactionRecordHTML = transactionRecordHTML + "<div class='trans-timestamp'>";
+                        transactionRecordHTML = transactionRecordHTML + "<div class='trans-timestamp' id='record-" + (transactionIndex + 1) + "-trans-timestamp'>";
                         transactionRecordHTML = transactionRecordHTML + transaction.transaction_time.toString();
                         transactionRecordHTML = transactionRecordHTML + "</div>";
                         transactionRecordHTML = transactionRecordHTML + "</li>";
@@ -75,5 +76,19 @@
                 }
             });
         });
+        $('#total-sales-calculate-button').click(function () {
+            var records = $('#transaction-table-rows').children('li').length;
+            if (records >= 1) {
+                var total = 0;
+                for (var i = 1; i <= records; i++) {
+                    var rawCost = $('#record-' + i + '-trans-cost').html();
+                    total = total + parseFloat(rawCost);
+                }
+
+                var totalSalesObject = $('#total-sales');
+                var totalSalesHTML = "Total Sales: " + total.toString();
+                totalSalesObject.html(totalSalesHTML);
+            }
+        })
     </script>
 {% endblock %}
