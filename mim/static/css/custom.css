@@ -53,7 +53,7 @@ header {
 
 /*navigation*/
 .navbar-default {
-    background: #2853a1;
+    background: #3cb371;
     color: #fff;
     width: 101%;
 }
@@ -92,7 +92,7 @@ header {
 }
 
 .navbar-default .navbar-nav > li > a:hover, .navbar-default .navbar-nav > li > a:focus {
-    color: #24c8ff;
+    color: #2e8b57;
     background-color: rgba(0, 0, 0, 0);
 }
 
@@ -106,7 +106,8 @@ header {
 }
 
 .navbar-default .navbar-nav > .active > a, .navbar-default .navbar-nav > .active > a:hover, .navbar-default .navbar-nav > .active > a:focus {
-    background: #24c8ff;
+    background: #2e8b57;
+    color: #32cd32;
 }
 
 .grey {
@@ -162,8 +163,8 @@ hr {
     padding-bottom: 5px;
 }
 
-.dark_grey {
-    background: #535353;
+.dark_green {
+    background: #556b2f;
     color: #fff;
 }
 
@@ -236,9 +237,9 @@ ul.body_panel li {
     font-size: 18px;
 }
 
-.btn-blue {
+.btn-green {
     color: #fff;
-    background-color: #24c8ff;
+    background-color: #3cb371;
     border: none;
     font-size: 18px;
     float: right;
@@ -344,7 +345,7 @@ footer {
 
 /* Start of subscription page */
 .pgname {
-    background: #24c8ff;
+    background: #8fbc8f;
     width: 101%;
     color: #fff;
     padding-top: 15px;
@@ -735,7 +736,7 @@ legend {
 .btn_add {
     border-radius: 0px;
     color: #fff;
-    background: #2853a0;
+    background: #3cb371;
     float: right;
     margin: 4px 4px;
 }
@@ -758,7 +759,7 @@ legend {
 .btn_login {
     border-radius: 0px;
     color: #fff;
-    background: #2853a0;
+    background: #3cb371;
     float: right;
     margin: 4px 4px;
 }
@@ -768,7 +769,7 @@ legend {
     color: #fff;
     float: left;
     margin: 4px 4px;
-    color: #24C8FF;
+    color: #32cd32;
     background: none;
 }
 
@@ -781,7 +782,7 @@ legend {
 }
 
 .form_spacing hr {
-    border-top: 1px solid #24C8FF;
+    border-top: 1px solid #3cb371;
 }
 
 a img {
