@@ -96,8 +96,8 @@ header {
     background-color: rgba(0, 0, 0, 0);
 }
 
-.login {
-    background: #6f82a3;
+.logout {
+    background: #556b2f;
     border-radius: 4px;
 }
 
@@ -110,37 +110,8 @@ header {
     color: #32cd32;
 }
 
-.grey {
+.green {
     background: #dad8d9;
-}
-
-.twt {
-    float: right;
-    background: #24c7fe;
-    border-radius: 10px;
-    padding-top: 8px;
-    padding-left: 0px;
-    padding-right: 0px;
-    min-height: 280px;
-}
-
-.twt img {
-    padding-bottom: 1%;
-}
-
-.fb {
-    float: right;
-    background: #2853a1;
-    border-radius: 10px;
-    padding-top: 8px;
-    margin-top: 20px;
-    padding-left: 0px;
-    padding-right: 0px;
-    min-height: 280px;
-}
-
-.fb img {
-    padding-bottom: 1%;
 }
 
 hr {
@@ -168,7 +139,7 @@ hr {
     color: #fff;
 }
 
-.blue {
+.green {
     background: #2853a0;
     margin: 14px 0px;
     color: #fff;
@@ -258,14 +229,6 @@ footer {
         margin-top: 15px;
     }
 
-    .twt {
-        width: 100%;
-    }
-
-    .fb {
-        width: 100%;
-    }
-
     .top_panel {
         margin-top: 25px;
     }
@@ -274,7 +237,7 @@ footer {
         padding: 10px 0px;
     }
 
-    .blue h3 {
+    .green h3 {
         padding: 10px 0px;
     }
 }
@@ -304,7 +267,7 @@ footer {
         padding: 10px 0px;
     }
 
-    .blue h3 {
+    .green h3 {
         padding: 10px 0px;
     }
 
@@ -338,7 +301,7 @@ footer {
         padding: 10px 0px;
     }
 
-    .blue h3 {
+    .green h3 {
         padding: 10px 0px;
     }
 }
@@ -457,103 +420,6 @@ input, textarea, button, select {
     float: left;
     padding-top: 10px;
     text-align: center;
-}
-
-@media screen and (max-width: 479px) {
-
-    .subscription_form {
-        width: 100%;
-        margin: 0px auto;
-
-    }
-}
-
-@media screen and (max-width: 469px) {
-    .service_img {
-        width: 100%;
-        float: left;
-        margin-top: 20px;
-    }
-
-    .service_content {
-        width: 100%;
-        float: left;
-    }
-}
-
-@media screen and (max-width: 640px) {
-    .service p {
-        padding: 0px 10px;
-    }
-
-    .service h4 {
-        padding: 0px 10px;
-    }
-}
-
-@media screen and (max-width: 1025px) {
-    .each_service {
-        padding: 10px 0px;
-        min-height: 300px;
-    }
-}
-
-/*admin login Page*/
-.login_container {
-    width: 30%;
-    margin: 0 auto;
-    max-width: 960px;
-}
-
-legend {
-    text-align: center;
-    font-size: 28px;
-}
-
-.btn-warning {
-    background: #2853a0;
-    border-color: #24c8ff;
-}
-
-.btn-warning:hover, .btn-warning:focus, .btn-warning.focus, .btn-warning:active, .btn-warning.active, .open > .dropdown-toggle.btn-warning {
-    background: #24c8ff;
-    border-color: #2853a0;
-}
-
-.well {
-    margin-top: 100px;
-}
-
-@media screen and (max-width: 640px) {
-    .login_container {
-        width: 100%;
-        margin: 0 auto;
-        max-width: 960px;
-    }
-
-    .well {
-        min-height: 300px;
-    }
-}
-
-@media screen and (max-width: 1000px) {
-    .login_container {
-        width: 40%;
-        margin: 0 auto;
-        max-width: 960px;
-    }
-
-    .well {
-        min-height: 250px;
-
-    }
-}
-
-/* services admin */
-.serviceedit {
-    position: absolute;
-    top: 16px;
-    left: 550px;
 }
 
 /* Customer & Product */
@@ -778,7 +644,6 @@ legend {
     width: 50%;
     padding: 10px 20px;
     margin: 20px auto;
-    /*background: #f4f4f4;*/
 }
 
 .form_spacing hr {
@@ -787,4 +652,54 @@ legend {
 
 a img {
     cursor: hand;
+}
+
+.login_container {
+    width: 30%;
+    margin: 0 auto;
+    max-width: 960px;
+}
+
+legend {
+    text-align: center;
+    font-size: 28px;
+}
+
+.btn-warning {
+    background: #2853a0;
+    border-color: #24c8ff;
+}
+
+.btn-warning:hover, .btn-warning:focus, .btn-warning.focus, .btn-warning:active, .btn-warning.active, .open > .dropdown-toggle.btn-warning {
+    background: #24c8ff;
+    border-color: #2853a0;
+}
+
+.well {
+    margin-top: 100px;
+}
+
+@media screen and (max-width: 640px) {
+    .login_container {
+        width: 100%;
+        margin: 0 auto;
+        max-width: 960px;
+    }
+
+    .well {
+        min-height: 300px;
+    }
+}
+
+@media screen and (max-width: 1000px) {
+    .login_container {
+        width: 40%;
+        margin: 0 auto;
+        max-width: 960px;
+    }
+
+    .well {
+        min-height: 250px;
+
+    }
 }

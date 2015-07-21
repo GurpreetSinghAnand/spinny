@@ -28,7 +28,10 @@ class CustomerSerializer(serializers.ModelSerializer):
 
 
 class TransactionSerializer(serializers.ModelSerializer):
+
     sales_person = serializers.ReadOnlyField(source='sales_person.username')
+    product = serializers.ReadOnlyField(source='product.display_name')
+    customer = serializers.ReadOnlyField(source='customer.cust_name')
 
     class Meta:
         model = Transaction

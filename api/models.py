@@ -36,4 +36,4 @@ class Transaction(models.Model):
         super(Transaction, self).save(*args, **kwargs)
 
     class Meta:
-        ordering = ('trans_id',)
+        ordering = ('transaction_time',)
