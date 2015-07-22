@@ -45,13 +45,12 @@ class Migration(migrations.Migration):
                 ('transaction_time', models.DateTimeField(auto_now_add=True, auto_created=True)),
                 ('trans_id', models.AutoField(serialize=False, auto_created=True, primary_key=True)),
                 ('cost', models.DecimalField(max_digits=15, decimal_places=2)),
-                ('customer', models.ForeignKey(to='api.Customer')),
-                ('product', models.ForeignKey(to='api.Product')),
-                (
-                'sales_person', models.ForeignKey(related_name='transactions', default=1, to=settings.AUTH_USER_MODEL)),
+                ('customer', models.ForeignKey(related_name='transactions', to='api.Customer')),
+                ('product', models.ForeignKey(related_name='transactions', to='api.Product')),
+                ('sales_person', models.ForeignKey(related_name='transactions', to=settings.AUTH_USER_MODEL)),
             ],
             options={
-                'ordering': ('trans_id',),
+                'ordering': ('transaction_time',),
             },
         ),
     ]

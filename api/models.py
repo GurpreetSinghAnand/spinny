@@ -28,7 +28,7 @@ class Transaction(models.Model):
     trans_id = models.AutoField(primary_key=True, auto_created=True)
     customer = models.ForeignKey(Customer)
     product = models.ForeignKey(Product)
-    sales_person = models.ForeignKey(User, related_name='transactions', default=1)
+    sales_person = models.ForeignKey(User, related_name='transactions')
     cost = models.DecimalField(max_digits=15, decimal_places=2)
     transaction_time = models.DateTimeField(auto_created=True, auto_now_add=True)
 

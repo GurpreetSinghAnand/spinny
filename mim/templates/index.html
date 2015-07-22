@@ -104,6 +104,7 @@
         transaction.cost = cost;
         {#        transaction.timestamp = $.now()#}
         transaction.csrfmiddlewaretoken = getCookie('csrftoken');
+        var transactionJSONObject = JSON.stringify(transaction, "\n");
         $.ajaxSetup({
             beforeSend: function (xhr, settings) {
                 if (!csrfSafeMethod(settings.type) && !this.crossDomain) {
@@ -111,7 +112,6 @@
                 }
             }
         });
-        var transactionJSONObject = JSON.stringify(transaction, "\n");
         $.ajax({
             headers: {"Authorization": "Basic " + window.btoa("spinny:spinny")},
             url: '/api/PostNewTransaction/',
@@ -121,7 +121,7 @@
             data: transactionJSONObject,
             success: function (response) {
                 alert('Transaction Completed!');
-            }
+            },
         });
         window.location.reload();
     });
