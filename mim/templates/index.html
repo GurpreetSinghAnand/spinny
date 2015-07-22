@@ -93,37 +93,40 @@
         updateCost();
     });
     $('#confirm-transactions').click(function () {
-        var product = $('#product option:selected').val();
-        var cost = $('#cost').html().toString().substring(2, $('#cost').html().toString().length);
-        var sales_person = $('#sales-person').html().toString();
-        var customer = $('#customer option:selected').val();
-        var transaction = {};
-        transaction.product = product;
-        transaction.sales_person = sales_person;
-        transaction.customer = customer;
-        transaction.cost = cost;
-        {#        transaction.timestamp = $.now()#}
-        transaction.csrfmiddlewaretoken = getCookie('csrftoken');
-        var transactionJSONObject = JSON.stringify(transaction, "\n");
-        $.ajaxSetup({
-            beforeSend: function (xhr, settings) {
-                if (!csrfSafeMethod(settings.type) && !this.crossDomain) {
-                    xhr.setRequestHeader("X-CSRFToken", getCookie('csrftoken'));
+        var retVal = confirm('Do you want to continue?');
+        if (retVal == true) {
+            var product = $('#product option:selected').val();
+            var cost = $('#cost').html().toString().substring(2, $('#cost').html().toString().length);
+            var sales_person = $('#sales-person').html().toString();
+            var customer = $('#customer option:selected').val();
+            var transaction = {};
+            transaction.product = product;
+            transaction.sales_person = sales_person;
+            transaction.customer = customer;
+            transaction.cost = cost;
+            {#        transaction.timestamp = $.now()#}
+            transaction.csrfmiddlewaretoken = getCookie('csrftoken');
+            var transactionJSONObject = JSON.stringify(transaction, "\n");
+            $.ajaxSetup({
+                beforeSend: function (xhr, settings) {
+                    if (!csrfSafeMethod(settings.type) && !this.crossDomain) {
+                        xhr.setRequestHeader("X-CSRFToken", getCookie('csrftoken'));
+                    }
                 }
-            }
-        });
-        $.ajax({
-            headers: {"Authorization": "Basic " + window.btoa("spinny:spinny")},
-            url: '/api/PostNewTransaction/',
-            type: 'POST',
-            contentType: 'application/json',
-            dataType: 'json',
-            data: transactionJSONObject,
-            success: function (response) {
-                alert('Transaction Completed!');
-            },
-        });
-        window.location.reload();
+            });
+            $.ajax({
+                headers: {"Authorization": "Basic " + window.btoa("spinny:spinny")},
+                url: '/api/PostNewTransaction/',
+                type: 'POST',
+                contentType: 'application/json',
+                dataType: 'json',
+                data: transactionJSONObject,
+                success: function (response) {
+                    alert('Transaction Completed!');
+                }
+            });
+            window.location.reload();
+        }
     });
     function getCookie(name) {
         var cookieValue = null;

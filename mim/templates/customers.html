@@ -196,30 +196,32 @@
 
     }
     function deleteRecord(id) {
-        alert("Do you want to continue?");
-        $.ajaxSetup({
-            beforeSend: function (xhr, settings) {
-                if (!csrfSafeMethod(settings.type) && !this.crossDomain) {
-                    xhr.setRequestHeader("X-CSRFToken", getCookie('csrftoken'));
+        var retVal = confirm('Do you want to continue?');
+        if (retVal == true) {
+            $.ajaxSetup({
+                beforeSend: function (xhr, settings) {
+                    if (!csrfSafeMethod(settings.type) && !this.crossDomain) {
+                        xhr.setRequestHeader("X-CSRFToken", getCookie('csrftoken'));
+                    }
                 }
-            }
-        });
-        $.ajax({
-            async: false,
-            url: '/api/DeleteCustomerById/' + id + '/',
-            type: 'DELETE',
-            dataType: 'json',
-            contentType: 'application/json',
-            headers: {"Authorization": "Basic " + window.btoa("spinny:spinny")},
-            success: function (response) {
-                alert('Record Deleted!');
-            },
-            error: function (error) {
-                alert(error.detail);
-            }
+            });
+            $.ajax({
+                async: false,
+                url: '/api/DeleteCustomerById/' + id + '/',
+                type: 'DELETE',
+                dataType: 'json',
+                contentType: 'application/json',
+                headers: {"Authorization": "Basic " + window.btoa("spinny:spinny")},
+                success: function (response) {
+                    alert('Record Deleted!');
+                },
+                error: function (error) {
+                    alert(error.detail);
+                }
 
-        });
-        window.location.reload();
+            });
+            window.location.reload();
+        }
     }
     function cancelUpdateRecord(id) {
         window.location.reload();
